@@ -1,5 +1,11 @@
 name: arcadedb connection check
 
+on:
+  workflow_dispatch:
+  push:
+    paths:
+    - '.github/workflows/**'
+
 jobs:
   rcade:
     runs-on: ubuntu-latest
