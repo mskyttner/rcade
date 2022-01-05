@@ -12,7 +12,7 @@ jobs:
     container: ubuntu
     services:
       arcadedb:
-        image: 
+        image: arcadedata/arcadedb:latest
         env:
           ARCADEDB_OPTS_MEMORY: "-Xms800M -Xmx800M"
           arcadedb.postgres.debug: true
