@@ -1,0 +1,21 @@
+name: arcadedb connection check
+
+jobs:
+  rcade:
+    runs-on: ubuntu-latest
+    container: ubuntu
+    services:
+      arcadedb:
+        image: 
+        env:
+          ARCADEDB_OPTS_MEMORY: "-Xms800M -Xmx800M"
+          arcadedb.postgres.debug: true
+          arcadedb.server.rootPassword: playwithdata
+          arcadedb.server.defaultDatabases: "Imported[root]{import:https://github.com/ArcadeData/arcadedb-datasets/raw/main/orientdb/OpenBeer.gz}"
+          arcadedb.server.plugins: "Postgres:com.arcadedb.postgres.PostgresProtocolPlugin"
+    steps:
+    - name: Verify connection from container 
+      run: |
+        apt-get update && apt-get install -y --no-install-recommends postgresql-client-common postgresql-client-12
+        PGPASSWORD=playwithdata psql -d Imported -h arcadedb -p 5432 -U root -c 'select name from Beer limit 1' -o /dev/stdout
+        
